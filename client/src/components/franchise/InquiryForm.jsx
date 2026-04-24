@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Send, CheckCircle2, MessageCircle, MapPin, Globe, CreditCard } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 export default function InquiryForm() {
   const [formData, setFormData] = useState({
@@ -94,7 +95,7 @@ export default function InquiryForm() {
     setLoading(true);
     
     try {
-      const response = await fetch('http://localhost:5000/api/franchise', {
+      const response = await fetch(`${API_BASE_URL}/api/franchise`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

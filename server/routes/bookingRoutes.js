@@ -136,10 +136,11 @@ router.post('/', async (req, res) => {
     res.status(200).json({ message: "Booking successful" });
 
   } catch (err) {
-    console.error('❌ Booking error:', err);
+    console.error('❌ Mongoose Validation/Save Error:', err.errors || err);
     res.status(500).json({ 
       message: "Internal Server Error", 
-      error: err.message 
+      error: err.message,
+      details: err.errors ? Object.keys(err.errors).map(key => err.errors[key].message) : []
     });
   }
 });

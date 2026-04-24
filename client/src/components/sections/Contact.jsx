@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, MessageCircle } from 'lucide-react';
+import { API_BASE_URL } from '../../config';
 
 export default function Contact({ selectedBooking }) {
   const [formData, setFormData] = useState({
@@ -98,7 +99,7 @@ export default function Contact({ selectedBooking }) {
 
       console.log("🚀 Sending booking:", bookingData);
 
-      const response = await fetch("http://localhost:5000/api/book", {
+      const response = await fetch(`${API_BASE_URL}/api/book`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
