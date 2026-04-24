@@ -4,11 +4,27 @@ import { Check } from 'lucide-react';
 
 const plans = [
   {
+    name: 'Conference Room',
+    monthlyPrice: null,
+    dailyPrice: 999,
+    description: 'Professional space for meetings and presentations.',
+    features: ['Smart TV / Projector', 'High-Speed WiFi', 'Whiteboard', 'Free Coffee & Tea'],
+    popular: false,
+  },
+  {
     name: 'Day Pass',
     monthlyPrice: null,
     dailyPrice: 499,
     description: 'Perfect for drop-ins and occasional visits.',
     features: ['High-Speed WiFi', 'Open Desk Seating', 'Free Coffee & Tea', 'Community Access'],
+    popular: true,
+  },
+  {
+    name: 'Private Cabin',
+    monthlyPrice: null,
+    dailyPrice: 999,
+    description: 'Daily access to a private, quiet workspace.',
+    features: ['Secured Space', 'High-Speed WiFi', 'Meeting Room Access', 'Free Coffee & Tea'],
     popular: false,
   },
   {
@@ -24,7 +40,7 @@ const plans = [
     monthlyPrice: 29999,
     dailyPrice: null,
     description: 'Secured private office for startups and teams.',
-    features: ['Furnished Cabin for 4-6', 'Company Branding', 'Meeting Rooms', 'Premium Network', 'Free Coffee & Tea', 'Dedicated IP Address'],
+    features: ['Furnished Cabin for 2-5', 'Company Branding', 'Meeting Rooms', 'Premium Network', 'Free Coffee & Tea', 'Dedicated IP Address'],
     popular: false,
   }
 ];
@@ -33,12 +49,24 @@ export default function Pricing({ onSelectBooking }) {
   const [isMonthly, setIsMonthly] = useState(true);
 
   const handleGetStarted = (plan) => {
-    const duration = plan.name === 'Day Pass' ? 'Daily' : 'Monthly';
-    const price = plan.name === 'Day Pass' ? plan.dailyPrice : plan.monthlyPrice;
+    const duration = isMonthly ? 'Monthly' : 'Daily';
+    const price = isMonthly ? plan.monthlyPrice : plan.dailyPrice;
+    
+    // Format plan name as requested: "Plan Name (Duration) – ₹Price"
+    let planLabel = plan.name;
+    if (plan.name === 'Private Cabin') {
+      planLabel = `Private Cabin (${duration})`;
+    } else if (plan.name === 'Day Pass') {
+      planLabel = 'Day Pass';
+    } else if (plan.name === 'Conference Room') {
+      planLabel = 'Conference Room';
+    }
+
+    const finalPlanName = `${planLabel} – ₹${price}`;
     
     if (onSelectBooking) {
       onSelectBooking({
-        planName: plan.name,
+        planName: finalPlanName,
         price: `₹${price}`,
         basePrice: price,
         duration: duration
@@ -92,6 +120,7 @@ export default function Pricing({ onSelectBooking }) {
               key={plan.name}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -10, transition: { duration: 0.2 } }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               className={`relative glass-card p-8 rounded-3xl border ${plan.popular ? 'border-neon-purple shadow-[0_0_30px_rgba(176,38,255,0.2)] transform md:-translate-y-4' : 'border-white/10'}`}
@@ -117,9 +146,9 @@ export default function Pricing({ onSelectBooking }) {
               </ul>
               <button 
                 onClick={() => handleGetStarted(plan)}
-                className={`w-full py-4 rounded-xl font-bold transition-all ${plan.popular ? 'bg-gradient-to-r from-neon-purple to-neon-blue text-white hover:shadow-[0_0_20px_#b026ff]' : 'bg-white/10 text-white hover:bg-white/20'}`}
+                className="w-full py-4 rounded-xl font-bold transition-all bg-gradient-to-r from-neon-purple to-neon-blue text-white hover:shadow-[0_0_20px_#b026ff]"
               >
-                Get Started
+                Book Now
               </button>
             </motion.div>
           );

@@ -19,9 +19,11 @@ export default function Contact({ selectedBooking }) {
   const today = new Date().toISOString().split('T')[0];
 
   const planPrices = {
-    'Day Pass': 499,
-    'Dedicated Desk': 6999,
-    'Private Cabin': 29999
+    'Day Pass – ₹499': 499,
+    'Conference Room – ₹999': 999,
+    'Private Cabin (Daily) – ₹999': 999,
+    'Dedicated Desk – ₹6999': 6999,
+    'Private Cabin (Monthly) – ₹29999': 29999
   };
 
   useEffect(() => {
@@ -35,16 +37,16 @@ export default function Contact({ selectedBooking }) {
   }, [selectedBooking]);
 
   useEffect(() => {
-    if (formData.planType === 'Day Pass') {
+    if (formData.planType.includes('Day Pass') || formData.planType.includes('Daily') || formData.planType.includes('Conference Room')) {
       setFormData(prev => ({ ...prev, duration: 'Daily' }));
-    } else if (formData.planType === 'Dedicated Desk' || formData.planType === 'Private Cabin') {
+    } else if (formData.planType.includes('Monthly') || formData.planType.includes('Dedicated Desk')) {
       setFormData(prev => ({ ...prev, duration: 'Monthly' }));
     }
   }, [formData.planType]);
 
   useEffect(() => {
     const base = planPrices[formData.planType] || 0;
-    const people = formData.planType === 'Private Cabin' ? 1 : parseInt(formData.people) || 1;
+    const people = formData.planType.includes('Private Cabin') ? 1 : parseInt(formData.people) || 1;
     setTotalPrice(base * people);
   }, [formData.planType, formData.people]);
 
@@ -135,7 +137,7 @@ export default function Contact({ selectedBooking }) {
         <p className="text-slate-400">Ready to level up your workspace? Reserve your spot today.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Contact Info & Map */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
@@ -158,15 +160,15 @@ export default function Contact({ selectedBooking }) {
           <div className="space-y-6">
             <div className="flex items-center gap-4 text-slate-300">
               <div className="p-3 bg-white/5 rounded-full border border-white/10"><MapPin className="text-neon-pink" size={20}/></div>
-              <p>Tech Park Road, Gorakhpur, UP 273010</p>
+              <p>2nd Floor, Opposite Vijay Cinema, Vijay Chowk, Gorakhpur, India, 273001</p>
             </div>
             <div className="flex items-center gap-4 text-slate-300">
               <div className="p-3 bg-white/5 rounded-full border border-white/10"><Phone className="text-neon-blue" size={20}/></div>
-              <p>+91 98765 43210</p>
+              <p>+91 96701 11167</p>
             </div>
             <div className="flex items-center gap-4 text-slate-300">
               <div className="p-3 bg-white/5 rounded-full border border-white/10"><Mail className="text-neon-purple" size={20}/></div>
-              <p>hello@startupcafe.com</p>
+              <p>startupcafegkp@gmail.com</p>
             </div>
           </div>
         </motion.div>
@@ -203,7 +205,7 @@ export default function Contact({ selectedBooking }) {
               
               <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">
                 <a 
-                  href="https://wa.me/916393428001" 
+                  href="https://wa.me/919670111167" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-3 bg-green-600 hover:bg-green-500 text-white transition-all shadow-[0_10px_20px_-10px_rgba(22,163,74,0.5)]"
@@ -257,9 +259,11 @@ export default function Contact({ selectedBooking }) {
                     <div className="relative">
                       <select name="planType" value={formData.planType} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all appearance-none [&>option]:bg-[#1a1a1a] cursor-pointer">
                         <option value="">Select a Plan</option>
-                        <option value="Day Pass">Day Pass</option>
-                        <option value="Dedicated Desk">Dedicated Desk</option>
-                        <option value="Private Cabin">Private Cabin</option>
+                        <option value="Day Pass – ₹499">Day Pass – ₹499</option>
+                        <option value="Conference Room – ₹999">Conference Room – ₹999</option>
+                        <option value="Private Cabin (Daily) – ₹999">Private Cabin (Daily) – ₹999</option>
+                        <option value="Dedicated Desk – ₹6999">Dedicated Desk – ₹6999</option>
+                        <option value="Private Cabin (Monthly) – ₹29999">Private Cabin (Monthly) – ₹29999</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
@@ -274,7 +278,7 @@ export default function Contact({ selectedBooking }) {
                     <div className="flex bg-white/5 border border-white/10 rounded-xl p-1 relative min-h-[50px]">
                       <button 
                         type="button" 
-                        disabled={formData.planType === 'Dedicated Desk' || formData.planType === 'Private Cabin'}
+                        disabled={formData.planType.includes('Dedicated Desk') || formData.planType.includes('Monthly')}
                         onClick={() => setFormData(p => ({ ...p, duration: 'Daily' }))} 
                         className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all relative z-10 ${formData.duration === 'Daily' ? 'text-white' : 'text-slate-500 disabled:opacity-30'}`}
                       >
@@ -282,7 +286,7 @@ export default function Contact({ selectedBooking }) {
                       </button>
                       <button 
                         type="button" 
-                        disabled={formData.planType === 'Day Pass'}
+                        disabled={formData.planType.includes('Day Pass') || formData.planType.includes('Daily') || formData.planType.includes('Conference Room')}
                         onClick={() => setFormData(p => ({ ...p, duration: 'Monthly' }))} 
                         className={`flex-1 py-1 text-xs font-bold rounded-lg transition-all relative z-10 ${formData.duration === 'Monthly' ? 'text-white' : 'text-slate-600 disabled:opacity-30'}`}
                       >
@@ -303,7 +307,7 @@ export default function Contact({ selectedBooking }) {
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all [color-scheme:dark]"
                     />
                   </div>
-                  {formData.planType !== 'Private Cabin' && (
+                  {!formData.planType.includes('Private Cabin') && (
                     <div className="space-y-2">
                       <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider ml-1">People</label>
                       <input type="number" min="1" name="people" value={formData.people} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all"/>
