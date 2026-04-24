@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { Monitor, Laptop, Coffee, Calendar, Landmark } from 'lucide-react';
 
 const streams = [
-  { icon: Monitor, title: "Dedicated Desks", price: "Starting ₹6,000/mo" },
-  { icon: Laptop, title: "Private Cabins", price: "Starting ₹15,000/mo" },
+  { icon: Monitor, title: "Dedicated Desks", price: "Starting ₹7,000/mo" },
+  { icon: Laptop, title: "Private Cabins", price: "Starting ₹30,000/mo" },
   { icon: Coffee, title: "Cafe Services", price: "Daily Footfall Monetization" },
   { icon: Calendar, title: "Events & Workshops", price: "Venue Booking Charges" },
 ];

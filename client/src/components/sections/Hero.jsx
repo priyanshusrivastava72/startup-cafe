@@ -137,7 +137,7 @@ export default function Hero() {
           transition={{ duration: 1, delay: 0.4, ease: 'easeOut' }}
           className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl font-light"
         >
-          Elevate your work in a dynamic, futuristic ecosystem designed for creators, entrepreneurs, and visionaries in Gorakhpur.
+          Elevate your work in a dynamic, futuristic ecosystem designed for creators, entrepreneurs, and visionaries.
         </motion.p>
 
         <motion.div 
@@ -146,10 +146,16 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-4 pointer-events-auto"
         >
-          <button className="px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-neon-purple to-neon-blue hover:shadow-[0_0_30px_#b026ff] transition-shadow duration-300">
+          <button 
+            onClick={() => document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-4 rounded-xl font-bold text-white bg-gradient-to-r from-neon-purple to-neon-blue hover:shadow-[0_0_30px_#b026ff] transition-shadow duration-300"
+          >
             Book a Seat
           </button>
-          <button className="px-8 py-4 rounded-xl font-bold text-white glass-card hover:bg-white/10 transition-colors duration-300">
+          <button 
+            onClick={() => document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-4 rounded-xl font-bold text-white glass-card hover:bg-white/10 transition-colors duration-300"
+          >
             Schedule a Visit
           </button>
         </motion.div>

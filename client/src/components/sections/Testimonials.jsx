@@ -4,21 +4,21 @@ import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Rishi Verma",
+    name: "Rohan Verma",
     role: "Founder, TechForge",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80",
-    content: "Startup Cafe transformed how my team works. The environment is inspiring, the networking is unmatched, and the 24/7 access helps us hit strict deadlines.",
+    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&q=80",
+    content: "Startup Cafe transformed how my team works. The environment is inspiring, the networking is unmatched, and the 9-7 access helps us hit strict deadlines.",
   },
   {
-    name: "Priya Sharma",
+    name: "Sanya Sharma",
     role: "Freelance Designer",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80",
-    content: "The best co-working space in Gorakhpur! The aesthetic is literally what I try to design for my clients. Super productive atmosphere.",
+    content: "The best co-working space I've ever worked in! The aesthetic is literally what I try to design for my clients. Super productive atmosphere.",
   },
   {
-    name: "Amit Desai",
+    name: "Arjun Desai",
     role: "CEO, DataStream",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&q=80",
+    image: "https://images.unsplash.com/photo-1581382575275-97901c2635b7?w=150&q=80",
     content: "We moved our whole startup to a private cabin here. The VC facilities and the community support feel like we are in a top-tier tech hub.",
   }
 ];

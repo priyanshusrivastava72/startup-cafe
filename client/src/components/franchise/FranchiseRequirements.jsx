@@ -21,7 +21,7 @@ export default function FranchiseRequirements() {
               <Square className="text-neon-blue w-6 h-6 md:w-8 md:h-8" />
             </div>
             <h4 className="text-lg md:text-xl font-bold text-white mb-4">Area Required</h4>
-            <p className="text-slate-400 text-sm md:text-base">Ideally 1500 – 3000 sq ft of premium carpet area in a commercial building.</p>
+            <p className="text-slate-400 text-sm md:text-base">Ideally 1000 – 3000 sq ft of premium carpet area in a commercial building.</p>
           </motion.div>
 
           <motion.div

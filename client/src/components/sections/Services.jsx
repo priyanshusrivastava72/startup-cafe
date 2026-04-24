@@ -15,7 +15,7 @@ const services = [
     gradient: 'from-neon-purple/20 to-transparent'
   },
   {
-    title: 'Meeting Rooms',
+    title: 'Conference Rooms',
     description: 'High-tech conference rooms equipped with smart screens and VC facilities.',
     icon: <Users size={32} className="text-neon-pink" />,
     gradient: 'from-neon-pink/20 to-transparent'

@@ -1,18 +1,20 @@
 import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
+import rajeshImg from '../../assets/partners/rajesh.png';
+import priyaImg from '../../assets/partners/priya.png';
 
 const testimonials = [
   {
     name: "Rajesh Khanna",
-    location: "Lucknow Partner",
+    location: "Partner",
     text: "Startup Cafe has been a game-changer for my real estate portfolio. The brand's focus on community and technology made it very easy to reach 90% occupancy within just 4 months of launch.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=60&w=200"
+    img: rajeshImg
   },
   {
-    name: "Sarah Williams",
-    location: "Gorakhpur Partner",
+    name: "Priya Sharma",
+    location: "Partner",
     text: "Deciding to take a franchise of Startup Cafe was the best business decision I've made. The support team is incredible, and the design aesthetic really sets us apart from local competitors.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=60&w=200"
+    img: priyaImg
   },
 ];
 

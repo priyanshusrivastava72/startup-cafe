@@ -29,7 +29,7 @@ export default function About() {
             More than just <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">desks.</span>
           </h2>
           <p className="text-slate-300 text-lg mb-6 leading-relaxed">
-            Startup Cafe Gorakhpur was born from a vision to bring Silicon Valley's collaborative ecosystem to Uttar Pradesh. We provide founders, freelancers, and growing teams with a premium, focused space that drives innovation forward.
+            Startup Cafe was born from a vision to bring Silicon Valley's collaborative ecosystem to our community. We provide founders, freelancers, and growing teams with a premium, focused space that drives innovation forward.
           </p>
           <p className="text-slate-300 text-lg mb-8 leading-relaxed">
             Here, you don't just rent an office. You join a community of driven individuals reshaping the tech landscape.
@@ -37,15 +37,15 @@ export default function About() {
           <div className="flex gap-8">
             <div>
               <h4 className="text-3xl font-bold text-white mb-1">500+</h4>
-              <p className="text-neon-blue text-sm">Active Members</p>
+              <p className="text-neon-blue text-sm">Trusted Members</p>
             </div>
             <div>
-              <h4 className="text-3xl font-bold text-white mb-1">24/7</h4>
+              <h4 className="text-3xl font-bold text-white mb-1">9-7</h4>
               <p className="text-neon-pink text-sm">Access</p>
             </div>
             <div>
-              <h4 className="text-3xl font-bold text-white mb-1">05</h4>
-              <p className="text-neon-purple text-sm">Meeting Rooms</p>
+              <h4 className="text-3xl font-bold text-white mb-1">100+</h4>
+              <p className="text-neon-purple text-sm">Dedicated Desk</p>
             </div>
           </div>
         </motion.div>
