@@ -116,11 +116,13 @@ export default function Contact({ selectedBooking }) {
           name: '', email: '', phone: '', planType: '', duration: 'Monthly', date: '', people: '1', message: ''
         });
       } else {
-        alert(`❌ ${data.message || "Something went wrong"}`);
+        const errorData = await response.json();
+        console.error("❌ Backend Error:", errorData);
+        alert(`❌ Booking failed: ${errorData.message || "Unknown error"}\nDetails: ${errorData.details ? errorData.details.join(", ") : "No extra details"}`);
       }
     } catch (error) {
-      console.error("❌ Frontend error:", error);
-      alert("❌ Booking failed. Please check backend connection.");
+      console.error("❌ Connection error:", error);
+      alert("❌ Could not connect to the server. Please ensure the backend is live at " + API_BASE_URL);
     }
   };
 

@@ -113,11 +113,13 @@ export default function InquiryForm() {
         });
         setCitySync('');
       } else {
-        alert(`❌ ${data.message || "Submission failed. Please try again."}`);
+        const errorData = await response.json();
+        console.error("❌ Backend Error:", errorData);
+        alert(`❌ Inquiry failed: ${errorData.message || "Unknown error"}`);
       }
     } catch (error) {
-      console.error("❌ Inquiry Error:", error);
-      alert("❌ Connection failed. Please ensure backend is running.");
+      console.error("❌ Connection error:", error);
+      alert("❌ Connection failed. Please ensure the backend is live at " + API_BASE_URL);
     } finally {
       setLoading(false);
     }
