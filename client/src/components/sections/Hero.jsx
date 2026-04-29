@@ -105,9 +105,10 @@ const FloatingElements = () => {
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={1} fade speed={1} />
       <OrbitControls 
         enableZoom={false} 
+        enablePan={false}
+        enableRotate={false}
         autoRotate 
         autoRotateSpeed={0.3} 
-        enableRotate={!isMobile} 
       />
     </>
   );
@@ -117,8 +118,8 @@ export default function Hero() {
   return (
     <section id="hero" className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden bg-black text-white">
       {/* 3D Background */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <Canvas camera={{ position: [0, 0, 8], fov: 45 }} style={{ pointerEvents: 'none', touchAction: 'auto' }}>
           <FloatingElements />
         </Canvas>
       </div>

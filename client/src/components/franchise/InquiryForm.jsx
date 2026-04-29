@@ -314,15 +314,15 @@ export default function InquiryForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-5 rounded-[1.25rem] bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink text-white font-black uppercase tracking-[0.2em] shadow-lg hover:shadow-[0_20px_40px_-10px_rgba(168,85,247,0.5)] transition-all disabled:opacity-70 group relative overflow-hidden"
+            className="w-full py-4 md:py-5 flex items-center justify-center rounded-[1.25rem] bg-gradient-to-r from-neon-blue via-neon-purple to-neon-pink text-white text-sm md:text-base font-black uppercase tracking-widest md:tracking-[0.2em] shadow-lg hover:shadow-[0_20px_40px_-10px_rgba(168,85,247,0.5)] transition-all disabled:opacity-70 group relative overflow-hidden"
           >
             {loading ? (
               <span className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin"></span>
             ) : (
               <>
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 skew-x-[-20deg]"></div>
-                Submit Premium Application
-                <Send className="w-5 h-5 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                <span className="relative z-10">Submit Application</span>
+                <Send className="w-4 h-4 md:w-5 md:h-5 ml-2 md:ml-3 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </>
             )}
           </button>

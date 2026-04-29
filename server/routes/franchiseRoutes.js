@@ -10,14 +10,6 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-// Initialize Nodemailer
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
 
 // POST /api/franchise
 router.post('/', async (req, res) => {
@@ -66,6 +58,13 @@ router.post('/', async (req, res) => {
     // 3. Send Email Notification (Non-blocking)
     try {
       if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
+          }
+        });
         const mailOptions = {
           from: process.env.EMAIL_USER,
           to: process.env.EMAIL_USER, // Admin Email
