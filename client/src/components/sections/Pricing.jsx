@@ -62,7 +62,12 @@ export default function Pricing({ onSelectBooking }) {
       planLabel = 'Conference Room';
     }
 
-    const finalPlanName = `${planLabel} – ₹${price}`;
+    let suffix = duration === 'Monthly' ? '/month' : '/day';
+    if (plan.name === 'Conference Room' || (plan.name === 'Private Cabin' && duration === 'Daily')) {
+      suffix = '/hr';
+    }
+
+    const finalPlanName = `${planLabel} – ₹${price}${suffix}`;
     
     if (onSelectBooking) {
       onSelectBooking({
@@ -134,7 +139,11 @@ export default function Pricing({ onSelectBooking }) {
               <p className="text-slate-400 text-sm mb-6 h-10">{plan.description}</p>
               <div className="mb-8">
                 <span className="text-4xl font-bold text-white">₹{price}</span>
-                <span className="text-slate-400">/{isMonthly ? 'mo' : 'day'}</span>
+                <span className="text-slate-400">
+                  {isMonthly 
+                    ? '/mo' 
+                    : (plan.name === 'Conference Room' || plan.name === 'Private Cabin' ? ' per hour' : '/day')}
+                </span>
               </div>
               <ul className="space-y-4 mb-8 h-48">
                 {plan.features.map((feature, i) => (

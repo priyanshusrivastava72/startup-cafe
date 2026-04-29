@@ -152,7 +152,7 @@ export default function InquiryForm() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a 
-              href="https://wa.me/916393428001" 
+              href="https://wa.me/919670111167" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 px-8 py-4 bg-green-600 hover:bg-green-500 text-white rounded-2xl font-bold shadow-lg transition-all group"
@@ -198,7 +198,7 @@ export default function InquiryForm() {
                 required
                 type="text"
                 name="fullName"
-                placeholder="Alexander Pierce"
+                placeholder="Sachin Tendulkar"
                 value={formData.fullName}
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl bg-white/[0.03] border border-white/10 text-white focus:outline-none focus:border-neon-blue focus:bg-white/[0.05] transition-all"
@@ -210,7 +210,7 @@ export default function InquiryForm() {
                 required
                 type="email"
                 name="email"
-                placeholder="alexander@luxury.com"
+                placeholder="sachin@luxury.com"
                 value={formData.email}
                 onChange={handleChange}
                 className="w-full px-5 py-4 rounded-2xl bg-white/[0.03] border border-white/10 text-white focus:outline-none focus:border-neon-purple focus:bg-white/[0.05] transition-all"
@@ -238,7 +238,7 @@ export default function InquiryForm() {
                   required
                   type="text"
                   name="city"
-                  placeholder="e.g. Gorakhpur, Lucknow"
+                  placeholder="e.g. Gorakhpur, Mumbai"
                   autoComplete="off"
                   value={formData.city}
                   onChange={handleChange}

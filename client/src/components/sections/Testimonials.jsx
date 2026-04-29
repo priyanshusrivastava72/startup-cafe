@@ -1,24 +1,25 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import sanyaImg from '../../assets/sanya.png';
+import rohanImg from '../../assets/rohan.png';
+import arjunImg from '../../assets/arjun.png';
+
 
 const testimonials = [
   {
     name: "Rohan Verma",
-    role: "Founder, TechForge",
-    image: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?w=150&q=80",
+    image: rohanImg,
     content: "Startup Cafe transformed how my team works. The environment is inspiring, the networking is unmatched, and the 9-7 access helps us hit strict deadlines.",
   },
   {
     name: "Sanya Sharma",
-    role: "Freelance Designer",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80",
+    image: sanyaImg,
     content: "The best co-working space I've ever worked in! The aesthetic is literally what I try to design for my clients. Super productive atmosphere.",
   },
   {
     name: "Arjun Desai",
-    role: "CEO, DataStream",
-    image: "https://images.unsplash.com/photo-1581382575275-97901c2635b7?w=150&q=80",
+    image: arjunImg,
     content: "We moved our whole startup to a private cabin here. The VC facilities and the community support feel like we are in a top-tier tech hub.",
   }
 ];
@@ -46,7 +47,7 @@ export default function Testimonials() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-bold text-white mb-16"
         >
-          What Creators <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-purple">Say</span>
+          What Co-Works <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-pink to-neon-purple">Say</span>
         </motion.h2>
 
         <div className="relative h-[250px] flex items-center justify-center">
@@ -71,7 +72,6 @@ export default function Testimonials() {
                 />
                 <div className="text-left">
                   <h4 className="text-white font-semibold">{testimonials[index].name}</h4>
-                  <p className="text-neon-pink text-sm">{testimonials[index].role}</p>
                 </div>
               </div>
             </motion.div>

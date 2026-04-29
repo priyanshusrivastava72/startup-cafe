@@ -1,28 +1,29 @@
 import { motion } from 'framer-motion';
+import { ClipboardList, MapPin, Paintbrush, Users, Rocket } from 'lucide-react';
 
 const steps = [
   {
-    number: "01",
+    icon: ClipboardList,
     title: "Application",
     desc: "Fill the inquiry form and our franchise experts will get in touch with you for initial screening."
   },
   {
-    number: "02",
+    icon: MapPin,
     title: "Site Selection",
     desc: "We help you identify or validate the perfect location based on data-driven footfall & demand analysis."
   },
   {
-    number: "03",
+    icon: Paintbrush,
     title: "Setup & Design",
     desc: "Our interior design team provides standard layouts to maintain our premium 'Startup Cafe' aesthetic."
   },
   {
-    number: "04",
+    icon: Users,
     title: "Hiring & Training",
     desc: "Recruitment assistance and intensive training for your staff on our hospitality standards and software."
   },
   {
-    number: "05",
+    icon: Rocket,
     title: "Grand Launch",
     desc: "A massive marketing push and launch event to ensure high occupancy from day one."
   }
@@ -50,11 +51,9 @@ export default function FranchiseProcess() {
                   viewport={{ once: true }}
                   className="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left"
                 >
-                  <div className="bg-gradient-to-r from-neon-purple to-neon-pink p-[1px] rounded-2xl mb-6">
-                    <div className="bg-dark-bg px-4 md:px-5 py-2 rounded-2xl">
-                      <span className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">
-                        {step.number}
-                      </span>
+                  <div className="bg-gradient-to-r from-neon-purple to-neon-pink p-[1px] rounded-2xl mb-6 shadow-[0_0_20px_rgba(176,38,255,0.3)]">
+                    <div className="bg-dark-bg p-4 md:p-5 rounded-2xl flex items-center justify-center">
+                      <step.icon size={36} strokeWidth={2.5} className="text-white drop-shadow-[0_0_12px_rgba(255,41,117,0.8)]" />
                     </div>
                   </div>
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-4">{step.title}</h3>

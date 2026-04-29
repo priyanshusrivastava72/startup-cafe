@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 router.post('/', async (req, res) => {
   try {
     console.log('📥 Incoming booking:', req.body);
-    const { name, email, phone, plan, duration, date, people, message } = req.body;
+    const { name, email, phone, plan, duration, date, people, location, message } = req.body;
 
     // 1. Save to MongoDB
     const newBooking = new Booking({
@@ -34,7 +34,8 @@ router.post('/', async (req, res) => {
       duration,
       date,
       people: Number(people),
-      message
+      location: location,
+      message: message
     });
 
     await newBooking.save();
@@ -49,6 +50,7 @@ router.post('/', async (req, res) => {
 👤 *Name:* ${name}
 📧 *Email:* ${email}
 📞 *Phone:* ${phone}
+📍 *Location:* ${location}
 📦 *Plan:* ${plan}
 ⏳ *Duration:* ${duration}
 📅 *Date:* ${date}
@@ -110,6 +112,10 @@ router.post('/', async (req, res) => {
                 <tr style="background-color: #f8f9fa;">
                   <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>People</strong></td>
                   <td style="padding: 10px; border: 1px solid #e0e0e0;">${people}</td>
+                </tr>
+                <tr style="background-color: #f8f9fa;">
+                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Location</strong></td>
+                  <td style="padding: 10px; border: 1px solid #e0e0e0; color: #6366f1; font-weight: bold;">${location}</td>
                 </tr>
                 <tr>
                   <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Message</strong></td>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, Mail, Phone, MessageCircle } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 
@@ -12,6 +12,7 @@ export default function Contact({ selectedBooking }) {
     duration: 'Monthly',
     date: '',
     people: '1',
+    location: '',
     message: ''
   });
 
@@ -20,12 +21,58 @@ export default function Contact({ selectedBooking }) {
   const today = new Date().toISOString().split('T')[0];
 
   const planPrices = {
-    'Day Pass – ₹499': 499,
-    'Conference Room – ₹999': 999,
-    'Private Cabin (Daily) – ₹999': 999,
-    'Dedicated Desk – ₹6999': 6999,
-    'Private Cabin (Monthly) – ₹29999': 29999
+    'Day Pass – ₹499/day': 499,
+    'Conference Room – ₹999/hr': 999,
+    'Private Cabin (Daily) – ₹999/hr': 999,
+    'Dedicated Desk – ₹6999/month': 6999,
+    'Private Cabin (Monthly) – ₹29999/month': 29999
   };
+  
+  const locations = [
+    "Nariman Point, Mumbai, Maharashtra",
+    "Bandra Kurla Complex (BKC), Mumbai, Maharashtra",
+    "Lower Parel, Mumbai, Maharashtra",
+    "Worli, Mumbai, Maharashtra",
+    "Colaba, Mumbai, Maharashtra",
+    "Fort, Mumbai, Maharashtra",
+    "Andheri East, Mumbai, Maharashtra",
+    "Powai, Mumbai, Maharashtra",
+    "Malad West (Mindspace), Mumbai, Maharashtra",
+    "Vashi (Navi Mumbai), Maharashtra",
+    "Zaveri Bazar, Mumbai, Maharashtra",
+    "Crawford Market, Mumbai, Maharashtra",
+    "Dharavi (Leather & Small Scale), Mumbai, Maharashtra",
+    "Saki Naka, Mumbai, Maharashtra",
+    "Kalamboli (Steel Market), Navi Mumbai, Maharashtra",
+    "Baxipur, Gorakhpur, Uttar Pradesh",
+    "Golghar, Gorakhpur, Uttar Pradesh",
+    "Mohaddipur, Gorakhpur, Uttar Pradesh",
+    "Asuran Chowk, Gorakhpur, Uttar Pradesh",
+    "Vijay Chowk, Gorakhpur, Uttar Pradesh",
+    "Taramandal, Gorakhpur, Uttar Pradesh",
+    "Betiahata, Gorakhpur, Uttar Pradesh",
+    "Medical College Road, Gorakhpur, Uttar Pradesh",
+    "Sahabganj, Gorakhpur, Uttar Pradesh",
+    "Transport Nagar, Gorakhpur, Uttar Pradesh",
+    "GIDA, Sahjanwa, Gorakhpur, Uttar Pradesh",
+    "Begum Bazar, Hyderabad, Telangana",
+    "HITEC City, Hyderabad, Telangana",
+    "Gachibowli, Hyderabad, Telangana",
+    "Madhapur, Hyderabad, Telangana",
+    "Financial District, Hyderabad, Telangana",
+    "Banjara Hills, Hyderabad, Telangana",
+    "Jubilee Hills, Hyderabad, Telangana",
+    "Abids, Hyderabad, Telangana",
+    "Ameerpet, Hyderabad, Telangana",
+    "Laad Bazar, Hyderabad, Telangana",
+    "Koti, Hyderabad, Telangana",
+    "Patancheru, Hyderabad, Telangana",
+    "Jeedimetla, Hyderabad, Telangana",
+    "Cherlapally, Hyderabad, Telangana"
+  ];
+  
+  const [locationSuggestions, setLocationSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   useEffect(() => {
     if (selectedBooking) {
@@ -61,6 +108,14 @@ export default function Contact({ selectedBooking }) {
       return;
     }
 
+    if (name === 'location') {
+      const filtered = locations.filter(loc => 
+        loc.toLowerCase().includes(value.toLowerCase())
+      );
+      setLocationSuggestions(filtered);
+      setShowSuggestions(true);
+    }
+
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -79,6 +134,7 @@ export default function Contact({ selectedBooking }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("DEBUG: formData at submit:", formData);
     
     try {
       if (formData.phone.length !== 10) {
@@ -87,17 +143,18 @@ export default function Contact({ selectedBooking }) {
       }
 
       const bookingData = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        plan: formData.planType,
-        duration: formData.duration,
-        date: formatDate(formData.date),
-        people: Number(formData.people),
-        message: formData.message
+        name: formData.name || "N/A",
+        email: formData.email || "N/A",
+        phone: formData.phone || "N/A",
+        plan: formData.planType || "N/A",
+        duration: formData.duration || "N/A",
+        date: formatDate(formData.date) || "N/A",
+        people: Number(formData.people) || 1,
+        location: formData.location || "N/A",
+        message: formData.message || "N/A"
       };
 
-      console.log("🚀 Sending booking:", bookingData);
+      console.log("🚀 FINAL PAYLOAD:", bookingData);
 
       const response = await fetch(`${API_BASE_URL}/api/book`, {
         method: "POST",
@@ -113,12 +170,11 @@ export default function Contact({ selectedBooking }) {
         setSubmitted(true);
         // Reset form
         setFormData({
-          name: '', email: '', phone: '', planType: '', duration: 'Monthly', date: '', people: '1', message: ''
+          name: '', email: '', phone: '', planType: '', duration: 'Monthly', date: '', people: '1', location: '', message: ''
         });
       } else {
-        const errorData = await response.json();
-        console.error("❌ Backend Error:", errorData);
-        alert(`❌ Booking failed: ${errorData.message || "Unknown error"}\nDetails: ${errorData.details ? errorData.details.join(", ") : "No extra details"}`);
+        console.error("❌ Backend Error:", data);
+        alert(`❌ Booking failed: ${data.message || "Unknown error"}\nDetails: ${data.details ? data.details.join(", ") : "No extra details"}`);
       }
     } catch (error) {
       console.error("❌ Connection error:", error);
@@ -127,7 +183,7 @@ export default function Contact({ selectedBooking }) {
   };
 
   return (
-    <section id="booking-form" className="py-24 px-6 md:px-12 max-w-7xl mx-auto relative z-10 border-t border-white/5 scroll-mt-28">
+    <section id="contact" className="py-24 px-6 md:px-12 max-w-7xl mx-auto relative z-10 border-t border-white/5 scroll-mt-28">
       <div className="text-center mb-16">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
@@ -146,7 +202,7 @@ export default function Contact({ selectedBooking }) {
           initial={{ opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="flex flex-col gap-8"
+          className="flex flex-col gap-8 order-2 lg:order-1"
         >
           <div className="glass-card p-1 overflow-hidden h-[400px] rounded-2xl relative">
             <iframe 
@@ -178,10 +234,11 @@ export default function Contact({ selectedBooking }) {
 
         {/* Booking Form */}
         <motion.div 
+          id="booking-form"
           initial={{ opacity: 0, x: 30 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden"
+          className="glass-card p-8 md:p-12 rounded-3xl relative overflow-hidden order-1 lg:order-2 scroll-mt-28"
         >
           {submitted ? (
             <motion.div 
@@ -236,11 +293,11 @@ export default function Contact({ selectedBooking }) {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
                   <div className="space-y-2">
                     <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider ml-1">Full Name</label>
-                    <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all" placeholder="John Doe"/>
+                    <input required type="text" name="name" value={formData.name} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all" placeholder="Rohan Singh"/>
                   </div>
                   <div className="space-y-2">
                     <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider ml-1">Email Address</label>
-                    <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all" placeholder="john@example.com"/>
+                    <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all" placeholder="rohan@example.com"/>
                   </div>
                 </div>
 
@@ -262,11 +319,11 @@ export default function Contact({ selectedBooking }) {
                     <div className="relative">
                       <select name="planType" value={formData.planType} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all appearance-none [&>option]:bg-[#1a1a1a] cursor-pointer">
                         <option value="">Select a Plan</option>
-                        <option value="Day Pass – ₹499">Day Pass – ₹499</option>
-                        <option value="Conference Room – ₹999">Conference Room – ₹999</option>
-                        <option value="Private Cabin (Daily) – ₹999">Private Cabin (Daily) – ₹999</option>
-                        <option value="Dedicated Desk – ₹6999">Dedicated Desk – ₹6999</option>
-                        <option value="Private Cabin (Monthly) – ₹29999">Private Cabin (Monthly) – ₹29999</option>
+                        <option value="Day Pass – ₹499/day">Day Pass – ₹499/day</option>
+                        <option value="Conference Room – ₹999/hr">Conference Room – ₹999/hr</option>
+                        <option value="Private Cabin (Daily) – ₹999/hr">Private Cabin (Daily) – ₹999/hr</option>
+                        <option value="Dedicated Desk – ₹6999/month">Dedicated Desk – ₹6999/month</option>
+                        <option value="Private Cabin (Monthly) – ₹29999/month">Private Cabin (Monthly) – ₹29999/month</option>
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" /></svg>
@@ -318,9 +375,56 @@ export default function Contact({ selectedBooking }) {
                   )}
                 </div>
 
-                <div>
-                  <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider mb-2 ml-1">Message (Optional)</label>
-                  <textarea rows={2} name="message" value={formData.message} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue border-neon-blue transition-all resize-none" placeholder="Special requirements or questions?"></textarea>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-2 relative">
+                    <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider ml-1">Location</label>
+                    <div className="relative group">
+                      <input 
+                        required 
+                        type="text" 
+                        name="location" 
+                        value={formData.location} 
+                        onChange={handleChange}
+                        onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                        onFocus={() => { if (formData.location) setShowSuggestions(true); }}
+                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all" 
+                        placeholder="Search for area (Mumbai, Gorakhpur, Hyderabad)"
+                        autoComplete="off"
+                      />
+                      <MapPin className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-neon-blue transition-colors" size={18} />
+                    </div>
+                    
+                    {/* Suggestions Dropdown */}
+                    <AnimatePresence>
+                      {showSuggestions && locationSuggestions.length > 0 && (
+                        <motion.div 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute z-[60] left-0 right-0 top-full mt-2 glass-card border border-white/10 rounded-xl overflow-hidden max-h-[200px] overflow-y-auto shadow-2xl"
+                        >
+                          {locationSuggestions.map((loc, i) => (
+                            <button
+                              key={i}
+                              type="button"
+                              onClick={() => {
+                                setFormData(prev => ({ ...prev, location: loc }));
+                                setShowSuggestions(false);
+                              }}
+                              className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white transition-colors border-b border-white/5 last:border-0"
+                            >
+                              {loc}
+                            </button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="block text-slate-400 text-xs font-medium uppercase tracking-wider ml-1">Message (Optional)</label>
+                    <textarea rows={1} name="message" value={formData.message} onChange={handleChange} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neon-blue transition-all resize-none" placeholder="Special requirements?"></textarea>
+                  </div>
                 </div>
 
                 {totalPrice > 0 && (
@@ -343,7 +447,7 @@ export default function Contact({ selectedBooking }) {
                 </button>
                 
                 <a 
-                  href="https://wa.me/916393428001" 
+                  href="https://wa.me/919670111167" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 border border-white/10 text-slate-400 hover:bg-white/5 transition-colors"

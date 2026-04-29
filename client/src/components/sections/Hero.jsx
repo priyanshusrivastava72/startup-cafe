@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars, Float } from '@react-three/drei';
 import { motion } from 'framer-motion';
@@ -80,6 +81,17 @@ const HyperRealisticLaptop = ({ position }) => {
 };
 
 const FloatingElements = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <>
       <ambientLight intensity={0.8} />
@@ -91,7 +103,12 @@ const FloatingElements = () => {
       <HyperRealisticLaptop position={[3, -1, -3]} />
       
       <Stars radius={100} depth={50} count={3000} factor={4} saturation={1} fade speed={1} />
-      <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={0.3} />
+      <OrbitControls 
+        enableZoom={false} 
+        autoRotate 
+        autoRotateSpeed={0.3} 
+        enableRotate={!isMobile} 
+      />
     </>
   );
 };
@@ -107,7 +124,7 @@ export default function Hero() {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 text-center max-w-4xl px-4 flex flex-col items-center pointer-events-none">
+      <div className="relative z-10 text-center max-w-4xl px-4 flex flex-col items-center pointer-events-none p-6 md:p-0 rounded-3xl md:rounded-none">
         <motion.div
            initial={{ opacity: 0, y: 30 }}
            animate={{ opacity: 1, y: 0 }}

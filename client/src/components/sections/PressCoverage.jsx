@@ -7,13 +7,22 @@ const importedMedia = import.meta.glob('../../assets/press/*.{jpg,jpeg,png,webp}
 const mediaItems = Object.entries(importedMedia).map(([path, module]) => ({
   url: module.default,
   fileName: path.split('/').pop().split('.')[0]
-}));
+})).sort((a, b) => {
+  // Sort N1, N2, N3 to be first
+  const priorityOrder = { 'N1': 1, 'N2': 2, 'N3': 3 };
+  const aOrder = priorityOrder[a.fileName] || 999;
+  const bOrder = priorityOrder[b.fileName] || 999;
+  return aOrder - bOrder;
+});
 
 const displayItems = mediaItems;
 
 // Yahan par list hai aapki SAARI 36 images ki. 
 // Jiska bhi Tile/Description badalna ho, uske aage quotes (" ") me likh dijiye!
 const knownImageDescriptions = {
+  "N1": { title: "Ministerial Recognition", publisher: "Government Feature", excerpt: "Recognized by Shri Suresh Prabhu for our startup innovation." },
+  "N2": { title: "Media Recognition", publisher: "News Coverage", excerpt: "Recognized for providing premium work environments and fostering innovation." },
+  "N3": { title: "Community Buzz", publisher: "Media Update", excerpt: "A glimpse of our journey and the growing startup community in the region." },
   "117325628_3043734575735474_4426712789553836837_n": { title: "iNext Coverage", publisher: "Newspaper", excerpt: "Empowering youth with new career opportunities through co-working" },
   "48239714_1845855142190096_7959491405070467072_n": { title: "Hindustan Times Feature", publisher: "Newspaper", excerpt: "Recognized for expanding co-working in smaller cities" },
   "511148711_9828983690543828_1849157987430120083_n": { title: "Featured in iNext", publisher: "Newspaper", excerpt: "Recognized for providing complete workspace solutions" },
@@ -134,7 +143,7 @@ export default function PressCoverage() {
                   transition={{ delay: (index % 4) * 0.1, duration: 0.5 }}
                   whileHover={{ y: -5 }}
                   onClick={() => setSelectedImage(item.url)}
-                  className="glass-card rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 transition-all group cursor-pointer flex flex-col"
+                  className={`glass-card rounded-2xl overflow-hidden border border-white/5 hover:border-white/20 transition-all group cursor-pointer flex-col ${!showAll && index >= 4 ? 'hidden md:flex' : 'flex'}`}
                 >
                   <div className="h-44 overflow-hidden relative bg-white/5">
                     <div className="absolute inset-0 bg-dark-bg/20 z-10 group-hover:bg-transparent transition-colors duration-300"></div>

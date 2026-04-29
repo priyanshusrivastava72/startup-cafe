@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://startup-cafe.onrender.com";
+export const API_BASE_URL = window.location.hostname === 'localhost' ? 'http://localhost:5000' : 'https://startup-cafe.onrender.com';

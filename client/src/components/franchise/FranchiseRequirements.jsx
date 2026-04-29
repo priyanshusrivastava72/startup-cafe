@@ -61,7 +61,7 @@ export default function FranchiseRequirements() {
         >
           <div className="lg:max-w-2xl text-center lg:text-left">
             <h4 className="text-white font-bold text-lg md:text-xl mb-2 italic">Note on Investment capability:</h4>
-            <p className="text-slate-400 text-sm md:text-base">Apart from the physical requirements, we look for partners who are passionate about building startup communities and have the financial capability to sustain operations for the first 6-12 months.</p>
+            <p className="text-slate-400 text-sm md:text-base">Apart from the physical requirements, we look for partners who are passionate about building startup communities and have the financial capability to sustain operations for the first 18 months.</p>
           </div>
           <button 
             onClick={() => document.getElementById('inquiry-form').scrollIntoView({ behavior: 'smooth' })}

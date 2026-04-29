@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import aboutImg from '../../assets/about_workspace.png';
 
 export default function About() {
   return (
@@ -13,7 +14,7 @@ export default function About() {
         >
           <div className="absolute inset-0 bg-gradient-to-r from-neon-purple to-neon-blue blur-3xl opacity-20 transform -rotate-6 rounded-full"></div>
           <img 
-            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" 
+            src={aboutImg}
             alt="Collab" 
             className="rounded-3xl border border-white/10 relative z-10"
           />
@@ -26,7 +27,7 @@ export default function About() {
            transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-            More than just <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">desks.</span>
+            More than just <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-purple to-neon-pink">desk.</span>
           </h2>
           <p className="text-slate-300 text-lg mb-6 leading-relaxed">
             Startup Cafe was born from a vision to bring Silicon Valley's collaborative ecosystem to our community. We provide founders, freelancers, and growing teams with a premium, focused space that drives innovation forward.

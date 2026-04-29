@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { TrendingUp, Users, Target } from 'lucide-react';
+import aboutImg from '../../assets/franchise_about.png';
+
 
 export default function FranchiseAbout() {
   return (
@@ -14,7 +16,7 @@ export default function FranchiseAbout() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-neon-purple to-neon-blue blur-3xl opacity-20 transform -rotate-12 rounded-full"></div>
             <img 
-              src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1200" 
+              src={aboutImg}
               alt="Community Collaboration" 
               className="w-full rounded-2xl md:rounded-3xl border border-white/10 relative z-10 shadow-2xl"
             />

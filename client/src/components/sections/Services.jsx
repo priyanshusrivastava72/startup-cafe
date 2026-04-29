@@ -3,13 +3,13 @@ import { Monitor, Users, Briefcase, Zap, Coffee, Globe } from 'lucide-react';
 
 const services = [
   {
-    title: 'Dedicated Desks',
+    title: 'Dedicated Desk',
     description: 'Your personal workspace in a shared environment, guaranteed yours every day.',
     icon: <Monitor size={32} className="text-neon-blue" />,
     gradient: 'from-neon-blue/20 to-transparent'
   },
   {
-    title: 'Private Cabins',
+    title: 'Private Cabin',
     description: 'Enclosed, customized spaces for teams focusing on high-growth and privacy.',
     icon: <Briefcase size={32} className="text-neon-purple" />,
     gradient: 'from-neon-purple/20 to-transparent'
@@ -101,7 +101,7 @@ export default function Services() {
           </span>
         </motion.h2>
         <p className="text-slate-400 max-w-2xl mx-auto">
-          From focused private spaces to collaborative open desks, we provide everything your startup needs to thrive.
+          From focused private spaces to collaborative open desk, we provide everything your startup needs to thrive.
         </p>
       </div>
 

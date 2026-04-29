@@ -23,7 +23,7 @@ export default function FranchiseTestimonials() {
     <section id="franchise-testimonials" className="py-20 md:py-24 px-6 md:px-12 bg-dark-bg relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Voice of our <span className="text-neon-pink">Partners</span></h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Voice of our <span className="text-neon-pink">Franchise Partners</span></h2>
           <p className="text-slate-400 text-sm md:text-base">Hear directly from those who are already growing with us.</p>
         </div>
 

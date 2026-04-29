@@ -8,6 +8,7 @@ const BookingSchema = new mongoose.Schema({
   duration: { type: String, required: true },
   date: { type: String, required: true },
   people: { type: Number, required: true },
+  location: { type: String, required: true },
   message: { type: String },
   createdAt: { type: Date, default: Date.now }
 });
