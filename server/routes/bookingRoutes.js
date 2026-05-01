@@ -74,6 +74,10 @@ router.post('/', async (req, res) => {
           auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
+          },
+          tls: {
+            // Fix for some hosting providers
+            rejectUnauthorized: false
           }
         });
 
@@ -136,7 +140,8 @@ router.post('/', async (req, res) => {
           `
         };
 
-        await transporter.sendMail(mailOptions);
+        // Important: Force IPv4 (family: 4) to avoid ENETUNREACH on Render
+        await transporter.sendMail({ ...mailOptions, family: 4 });
         console.log('📧 Email sent successfully to:', process.env.EMAIL_USER);
       } else {
         console.warn('⚠️ Email credentials missing in process.env. Skipping email sending.');
@@ -145,7 +150,7 @@ router.post('/', async (req, res) => {
       console.error('📧 Email Error Details:', {
         message: emailError.message,
         code: emailError.code,
-        command: emailError.command
+        stack: emailError.stack
       });
     }
 
