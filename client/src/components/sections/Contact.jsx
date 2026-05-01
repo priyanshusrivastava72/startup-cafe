@@ -18,6 +18,7 @@ export default function Contact({ selectedBooking }) {
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const today = new Date().toISOString().split('T')[0];
 
   const planPrices = {
@@ -134,11 +135,12 @@ export default function Contact({ selectedBooking }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("DEBUG: formData at submit:", formData);
+    setLoading(true);
     
     try {
       if (formData.phone.length !== 10) {
         alert("❌ Please enter a valid 10-digit phone number.");
+        setLoading(false);
         return;
       }
 
@@ -154,8 +156,6 @@ export default function Contact({ selectedBooking }) {
         message: formData.message || "N/A"
       };
 
-      console.log("🚀 FINAL PAYLOAD:", bookingData);
-
       const response = await fetch(`${API_BASE_URL}/api/book`, {
         method: "POST",
         headers: {
@@ -167,18 +167,20 @@ export default function Contact({ selectedBooking }) {
       const data = await response.json();
 
       if (response.ok) {
+        alert("✅ Booking successful! Our team will contact you soon.");
         setSubmitted(true);
         // Reset form
         setFormData({
           name: '', email: '', phone: '', planType: '', duration: 'Monthly', date: '', people: '1', location: '', message: ''
         });
       } else {
-        console.error("❌ Backend Error:", data);
-        alert(`❌ Booking failed: ${data.message || "Unknown error"}\nDetails: ${data.details ? data.details.join(", ") : "No extra details"}`);
+        alert(`❌ Backend Error: ${data.message || "Booking failed"}`);
       }
     } catch (error) {
       console.error("❌ Connection error:", error);
-      alert("❌ Could not connect to the server. Please ensure the backend is live at " + API_BASE_URL);
+      alert("❌ Connection failed! Please check your internet or try again later.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -442,8 +444,20 @@ export default function Contact({ selectedBooking }) {
                   </div>
                 )}
                 
-                <button type="submit" className="w-full py-4 rounded-xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple text-white hover:shadow-[0_0_20px_rgba(0,240,255,0.4)] transition-all">
-                  Confirm Booking
+                <button 
+                  type="submit" 
+                  disabled={loading}
+                  className={`w-full py-4 rounded-xl font-bold bg-gradient-to-r from-neon-blue to-neon-purple text-white transition-all ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]'}`}
+                >
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Submitting...
+                    </span>
+                  ) : 'Confirm Booking'}
                 </button>
                 
                 <a 

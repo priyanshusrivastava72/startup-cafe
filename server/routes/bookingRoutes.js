@@ -68,73 +68,85 @@ router.post('/', async (req, res) => {
     try {
       if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
         const transporter = nodemailer.createTransport({
-          service: 'gmail',
+          host: 'smtp.gmail.com',
+          port: 465,
+          secure: true, // Use SSL
           auth: {
             user: process.env.EMAIL_USER,
             pass: process.env.EMAIL_PASS
           }
         });
+
         const mailOptions = {
-          from: process.env.EMAIL_USER,
+          from: `"Startup Cafe Booking" <${process.env.EMAIL_USER}>`,
           to: process.env.EMAIL_USER, // Admin Email
-          subject: `New Coworking Booking: ${plan}`,
+          subject: `🚀 New Coworking Booking: ${plan}`,
           html: `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 10px;">
-              <h2 style="color: #6366f1; text-align: center; border-bottom: 2px solid #6366f1; padding-bottom: 10px;">New Booking Alert</h2>
-              <p>You have received a new booking from <strong>Startup Cafe Gorakhpur</strong>.</p>
+            <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e2e8f0; border-radius: 16px; background-color: #ffffff;">
+              <div style="text-align: center; margin-bottom: 25px;">
+                <h2 style="color: #6366f1; margin: 0; font-size: 24px; letter-spacing: -0.5px;">New Booking Alert</h2>
+                <p style="color: #64748b; margin-top: 5px;">Startup Cafe Gorakhpur</p>
+              </div>
               
-              <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
-                <tr style="background-color: #f8f9fa;">
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Full Name</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${name}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Email</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${email}</td>
-                </tr>
-                <tr style="background-color: #f8f9fa;">
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Phone</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${phone}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Plan Type</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0; color: #ec4899; font-weight: bold;">${plan}</td>
-                </tr>
-                <tr style="background-color: #f8f9fa;">
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Duration</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${duration}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Start Date</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${date}</td>
-                </tr>
-                <tr style="background-color: #f8f9fa;">
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>People</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${people}</td>
-                </tr>
-                <tr style="background-color: #f8f9fa;">
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Location</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0; color: #6366f1; font-weight: bold;">${location}</td>
-                </tr>
-                <tr>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;"><strong>Message</strong></td>
-                  <td style="padding: 10px; border: 1px solid #e0e0e0;">${message || 'No additional message'}</td>
-                </tr>
-              </table>
-              <div style="text-align: center; color: #666; font-size: 12px; margin-top: 20px;">
-                Sent from Startup Cafe Backend
+              <div style="background-color: #f8fafc; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Customer Name</td>
+                    <td style="padding: 10px 0; color: #1e293b; font-weight: 600; text-align: right;">${name}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Email Address</td>
+                    <td style="padding: 10px 0; color: #1e293b; font-weight: 600; text-align: right;">${email}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Phone Number</td>
+                    <td style="padding: 10px 0; color: #1e293b; font-weight: 600; text-align: right;">${phone}</td>
+                  </tr>
+                  <tr><td colspan="2" style="border-top: 1px solid #e2e8f0; padding: 10px 0;"></td></tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Plan Selected</td>
+                    <td style="padding: 10px 0; color: #ec4899; font-weight: 700; text-align: right;">${plan}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Duration</td>
+                    <td style="padding: 10px 0; color: #1e293b; font-weight: 600; text-align: right;">${duration}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Start Date</td>
+                    <td style="padding: 10px 0; color: #1e293b; font-weight: 600; text-align: right;">${date}</td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px 0; color: #64748b; font-size: 14px;">Location</td>
+                    <td style="padding: 10px 0; color: #6366f1; font-weight: 700; text-align: right;">${location}</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div style="margin-bottom: 25px;">
+                <p style="color: #64748b; font-size: 14px; margin-bottom: 8px;">Customer Message:</p>
+                <div style="background-color: #f1f5f9; padding: 15px; border-radius: 8px; color: #475569; font-style: italic;">
+                  "${message || 'No additional message provided.'}"
+                </div>
+              </div>
+
+              <div style="text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; color: #94a3b8; font-size: 12px;">
+                This is an automated notification from Startup Cafe Dashboard.
               </div>
             </div>
           `
         };
 
         await transporter.sendMail(mailOptions);
-        console.log('📧 Email sent successfully');
+        console.log('📧 Email sent successfully to:', process.env.EMAIL_USER);
       } else {
-        console.log('⚠️ Email credentials missing, skipping email');
+        console.warn('⚠️ Email credentials missing in process.env. Skipping email sending.');
       }
     } catch (emailError) {
-      console.error('📧 Email error (non-blocking):', emailError.message);
+      console.error('📧 Email Error Details:', {
+        message: emailError.message,
+        code: emailError.code,
+        command: emailError.command
+      });
     }
 
     // 4. Return Success
