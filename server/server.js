@@ -11,10 +11,32 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+// Robust CORS Configuration
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://start.arunlive.com",
+    "https://startupcafe.co.in",
+    "https://www.startupcafe.co.in",
+    "http://startupcafe.co.in",
+    "http://www.startupcafe.co.in"
+];
+
 app.use(cors({
-    origin: ["http://localhost:5173", "https://start.arunlive.com", "https://startupcafe.co.in"],
-    methods: ["GET", "POST"],
-    credentials: true
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            console.error(`CORS Error: Origin ${origin} not allowed`);
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
+    credentials: true,
+    optionsSuccessStatus: 200 // Success status for legacy browsers
 }));
 app.use(express.json());
 
