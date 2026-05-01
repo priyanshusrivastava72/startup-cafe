@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-    origin: ["http://localhost:5173", "https://start.arunlive.com"],
+    origin: ["http://localhost:5173", "https://start.arunlive.com", "https://startupcafe.co.in"],
     methods: ["GET", "POST"],
     credentials: true
 }));
